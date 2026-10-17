@@ -1,0 +1,3 @@
+# Registry backups contain the adapter's MAC address and network history
+*.reg
+*.log
