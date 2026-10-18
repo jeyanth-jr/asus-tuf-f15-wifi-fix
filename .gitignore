@@ -1,3 +1,5 @@
 # Registry backups contain the adapter's MAC address and network history
 *.reg
 *.log
+# Personal power-plan backup from 3-use-hibernate.ps1
+power-backup.json

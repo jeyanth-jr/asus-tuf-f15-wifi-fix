@@ -1,5 +1,7 @@
-# Brings the MT7921 back after it drops off the PCIe bus. Run as SYSTEM by the scheduled task
-# that 2-install-autorecover.ps1 creates (triggered by mtkwlex event 5002).
+# Tries to bring the MT7921 back after a driver failure. Run as SYSTEM by the scheduled task
+# that 2-install-autorecover.ps1 creates (triggered by mtkwlex 5002 or NDIS 10317).
+# It helps when the card is still on the bus. Once the card is gone (Present = False), neither a
+# rescan nor restarting its PCIe root port brought it back on the test laptop; only a power cycle did.
 $log = Join-Path $PSScriptRoot 'autorecover.log'
 function Write-Log($m) { "{0:yyyy-MM-dd HH:mm:ss}  {1}" -f (Get-Date), $m | Add-Content $log }
 
@@ -18,5 +20,5 @@ for ($try = 1; $try -le 5; $try++) {
     }
     Start-Sleep -Seconds (5 * $try)
 }
-Write-Log 'Wi-Fi did not come back after 5 attempts; a reboot is needed.'
+Write-Log 'Wi-Fi did not come back after 5 attempts; it needs a power cycle (Hibernate, or Shut down and power on).'
 exit 1
